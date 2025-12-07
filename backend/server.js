@@ -5,6 +5,8 @@ const authRoutes = require("./src/routes/authRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const branchRoutes = require("./src/routes/branchRoutes");
 const issueOptionsRoutes = require("./src/routes/issueOptionsRoutes");
+const ticketRoutes = require("./src/routes/ticketRoutes");
+const configRoutes = require("./src/routes/configRoutes");
 
 require("dotenv").config();
 
@@ -18,6 +20,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/branches", branchRoutes);
 app.use("/api/issueOptions", issueOptionsRoutes);
+app.use("/api/tickets", ticketRoutes);
+app.use("/api/config", configRoutes);
 
 
 // Route test

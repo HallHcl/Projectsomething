@@ -19,7 +19,7 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       setMessage("✓ เข้าสู่ระบบสำเร็จ!");
-      setTimeout(() => navigate("/openticket"), 1500);
+      setTimeout(() => navigate("/dashboard"), 1200);
     } catch (err) {
       setMessage(err.response?.data?.message || "✗ เข้าสู่ระบบไม่สำเร็จ");
     } finally {

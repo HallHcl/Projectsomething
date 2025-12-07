@@ -1,23 +1,23 @@
 // src/routes/ticketRoutes.js
 const express = require("express");
 const router = express.Router();
-const { authMiddleware } = require("../middleware/authMiddleware");
+const auth = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
-const { createTicket, getMyTickets, getAllTickets, updateStatus, getTicketById } = require("../controllers/ticketController");
-const upload = require("../utils/uploads"); // ใช้จาก utils
-
-// Upload config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "src/uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
-});
-const upload = multer({ storage });
+const { 
+  createTicket, 
+  getUserTickets, 
+  getRecentTickets,
+  getOverview,
+  getTicketById, 
+  updateStatus 
+} = require("../controllers/ticketController");
 
 // Routes
-router.post("/", authMiddleware, upload.single("attachedFile"), createTicket);
-router.get("/me", authMiddleware, getMyTickets);
-router.get("/all", authMiddleware, adminMiddleware, getAllTickets);
-router.get("/:ticketId", authMiddleware, getTicketById);
-router.put("/status/:ticketId", authMiddleware, adminMiddleware, updateStatus);
+router.post("/", auth, createTicket); // create ticket
+router.get("/user/me", auth, getUserTickets); // list all user's tickets (with pagination)
+router.get("/user/me/recent", auth, getRecentTickets); // list recent 5 tickets
+router.get("/overview", auth, getOverview); // dashboard overview counts
+router.get("/:id", auth, getTicketById); // get single ticket
+router.put("/:id/status", auth, adminMiddleware, updateStatus); // update status (admin only)
 
 module.exports = router;

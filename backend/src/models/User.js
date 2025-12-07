@@ -13,9 +13,21 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    fullName: {
+      type: String,
+      default: ""
+    },
     employeeId: {
       type: String,
       required: true
+    },
+    position: {
+      type: String,
+      default: ""
+    },
+    department: {
+      type: String,
+      default: ""
     },
     branchCode: {
       type: String,
@@ -24,6 +36,24 @@ const userSchema = new mongoose.Schema(
     branchName: {
       type: String,
       required: true
+    },
+    phone: {
+      type: String,
+      default: ""
+    },
+    profileImage: {
+      type: String,
+      default: null
+    },
+    theme: {
+      type: String,
+      enum: ["light", "dark"],
+      default: "light"
+    },
+    language: {
+      type: String,
+      enum: ["th", "en"],
+      default: "th"
     },
     role: {
       type: String,

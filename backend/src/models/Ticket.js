@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const ticketSchema = new mongoose.Schema(
   {
+    ticketNumber: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
+    },
     ticketKey: { 
       type: String, 
       required: true,
@@ -18,6 +24,14 @@ const ticketSchema = new mongoose.Schema(
     issueType: { 
       type: String, 
       required: true 
+    },
+    subIssue: {
+      type: String,
+      default: ""
+    },
+    anydeskNumber: {
+      type: String,
+      default: ""
     },
     details: { 
       type: String, 
