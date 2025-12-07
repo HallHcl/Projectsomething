@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/tickets"; // <-- เปลี่ยนตาม backend ของคุณถ้าจำเป็น
+const API_URL = "http://localhost:5000/api/tickets"; // <-- เปลี่ยกกกกนตาม backend ของคุณถ้าจำเป็น
 
 export default function OpenTicket() {
   // user info (จาก localStorage ที่คุณเก็บตอน login)
