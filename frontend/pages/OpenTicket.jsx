@@ -24,36 +24,8 @@ export default function OpenTicket() {
   const [files, setFiles] = useState([]); // เก็บ File objects
   const [previewImages, setPreviewImages] = useState([]); // เก็บ object URLs
 
-  // --- options ตามที่คุณยืนยันว่าส่งให้ตรงนี้เท่านั้น ---
-  const options = {
-    Hardware: [
-      "คอมเปิดไม่ติด",
-      "จอภาพเป็นเส้น / สีเพี้ยน",
-      "เครื่องดับเอง",
-      "ดู preview รูปภาพไม่ได้",
-    ],
-    Software: [
-      "ติดตั้งโปรแกรม",
-      "ถอนการติดตั้งโปรแกรม",
-      "Email ส่งไม่ได้ / รับไม่ได้",
-    ],
-    Network: [
-      "กล้อง CCTV ดูไม่ได้",
-      "เชื่อมต่อ Wi-Fi ไม่ได้",
-      "VPN ต่อไม่ได้",
-    ],
-    Printer: [
-      "สแกนไม่ได้",
-      "เครื่องปริ้นไม่ออกกระดาษ",
-      "หมึกไม่ออก / หมึกจาง",
-    ],
-    Other: [
-      "อื่นๆ (โปรดระบุในรายละเอียด)",
-      "ขอ Reset Password",
-      "ขอ เบิก/เปลี่ยนอุปกรณ์",
-    ],
-  };
-  // ----------------------------------------------------------------
+  // issue options (ดึงจาก API)
+  const [issueOptions, setIssueOptions] = useState([]);
 
   // โหลด user จาก localStorage (สมมติเก็บเป็น JSON string under "user")
   useEffect(() => {
@@ -101,6 +73,20 @@ export default function OpenTicket() {
     );
     setFilteredBranches(filtered);
   }, [branchSearchInput, branches]);
+
+  // Fetch issue options จาก API
+  useEffect(() => {
+    const fetchIssueOptions = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/issueOptions");
+        const data = await res.json();
+        setIssueOptions(data || []);
+      } catch (err) {
+        console.error("fetch issue options error:", err);
+      }
+    };
+    fetchIssueOptions();
+  }, []);
 
   // สร้าง preview URLs และเก็บ File objects
   const handleFileChange = (e) => {
@@ -387,11 +373,11 @@ export default function OpenTicket() {
                 required
               >
                 <option value="">-- เลือกประเภทปัญหา --</option>
-                <option value="Hardware">🖥 Hardware</option>
-                <option value="Software">💾 Software</option>
-                <option value="Network">🌐 Network</option>
-                <option value="Printer">🖨 Printer</option>
-                <option value="Other">อื่นๆ</option>
+                {issueOptions.map((opt) => (
+                  <option value={opt.category} key={opt.category}>
+                    {opt.category}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -407,11 +393,13 @@ export default function OpenTicket() {
                 required
               >
                 <option value="">-- เลือกหัวข้อย่อย --</option>
-                {options[category].map((opt, idx) => (
-                  <option value={opt} key={idx}>
-                    {opt}
-                  </option>
-                ))}
+                {issueOptions
+                  .find((opt) => opt.category === category)
+                  ?.subOptions.map((sub, idx) => (
+                    <option value={sub} key={idx}>
+                      {sub}
+                    </option>
+                  ))}
               </select>
             </div>
           )}

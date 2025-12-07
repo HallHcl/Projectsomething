@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./src/routes/authRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const branchRoutes = require("./src/routes/branchRoutes");
+const issueOptionsRoutes = require("./src/routes/issueOptionsRoutes");
 
 require("dotenv").config();
 
@@ -16,6 +17,7 @@ app.use("/uploads", express.static("src/uploads"));
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/branches", branchRoutes);
+app.use("/api/issueOptions", issueOptionsRoutes);
 
 
 // Route test
