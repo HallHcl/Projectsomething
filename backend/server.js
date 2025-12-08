@@ -1,12 +1,25 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
+// Register all models
+require("./src/models/User");
+require("./src/models/Branch");
+require("./src/models/IssueOption");
+require("./src/models/Ticket");
+require("./src/models/KnowledgeCategory");
+require("./src/models/KnowledgeArticle");
+require("./src/models/KnowledgeBook");
+require("./src/models/KnowledgeBookPage");
+
 const authRoutes = require("./src/routes/authRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const branchRoutes = require("./src/routes/branchRoutes");
 const issueOptionsRoutes = require("./src/routes/issueOptionsRoutes");
 const ticketRoutes = require("./src/routes/ticketRoutes");
 const configRoutes = require("./src/routes/configRoutes");
+const knowledgeRoutes = require("./src/routes/knowledgeRoutes");
+const bookRoutes = require("./src/routes/bookRoutes");
 
 require("dotenv").config();
 
@@ -22,6 +35,8 @@ app.use("/api/branches", branchRoutes);
 app.use("/api/issueOptions", issueOptionsRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/config", configRoutes);
+app.use("/api/kb", knowledgeRoutes);
+app.use("/api/books", bookRoutes);
 
 
 // Route test

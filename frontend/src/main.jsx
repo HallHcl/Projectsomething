@@ -7,6 +7,11 @@ import OpenTicket from "../pages/OpenTicket";
 import TicketHistory from "../pages/TicketHistory";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
+import Knowledge from "../pages/Knowledge";
+import AdminKB from "../pages/AdminKB";
+import KBDetail from "../pages/KBDetail";
+import KBBook from "../pages/KBBook";
+import KBReader from "../pages/KBReader";
 import { ThemeProvider } from "./context/ThemeContext";
 
 import "./index.css";
@@ -23,6 +28,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/openticket" element={<OpenTicket />} />
           <Route path="/ticketHistory" element={<TicketHistory />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/knowledge" element={<Knowledge />} />
+          <Route path="/kb/:id" element={<KBDetail />} />
+          <Route path="/admin/kb" element={<AdminKB />} />
+          <Route path="/book/:slug" element={<KBBook />} />
+          <Route path="/book-reader/:slug" element={<KBReader />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
